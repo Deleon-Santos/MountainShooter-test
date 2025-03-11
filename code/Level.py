@@ -27,10 +27,7 @@ class Level:
         player = EntityFactory.get_entity('Player1')
         player.score = player_score[0]
         self.entity_list.append(player)
-        if game_mode in [MENU_OPTION[1], MENU_OPTION[2]]:
-            player = EntityFactory.get_entity('Player2')
-            player.score = player_score[1]
-            self.entity_list.append(player)
+        
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         pygame.time.set_timer(EVENT_TIMEOUT, TIMEOUT_STEP)  # 100ms
 
@@ -50,8 +47,7 @@ class Level:
                         self.entity_list.append(shoot)
                 if ent.name == 'Player1':
                     self.level_text(14, f'Player1 - Health: {ent.health} | Score: {ent.score}', C_GREEN, (10, 25))
-                if ent.name == 'Player2':
-                    self.level_text(14, f'Player2 - Health: {ent.health} | Score: {ent.score}', C_CYAN, (10, 45))
+                
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -65,8 +61,7 @@ class Level:
                         for ent in self.entity_list:
                             if isinstance(ent, Player) and ent.name == 'Player1':
                                 player_score[0] = ent.score
-                            if isinstance(ent, Player) and ent.name == 'Player2':
-                                player_score[1] = ent.score
+                            
                         return True
 
                 found_player = False
