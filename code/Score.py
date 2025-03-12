@@ -5,7 +5,7 @@ import pygame
 from pygame import Surface, Rect, KEYDOWN, K_RETURN, K_BACKSPACE, K_ESCAPE
 from pygame.font import Font
 
-from code.Const import C_YELLOW, SCORE_POS, MENU_OPTION, C_WHITE
+from code.Const import C_ORANGE, C_YELLOW, SCORE_POS, MENU_OPTION, C_WHITE
 from code.DBProxy import DBProxy
 
 
@@ -54,15 +54,15 @@ class Score:
         pygame.mixer_music.load('./asset/Score.mp3')
         pygame.mixer_music.play(-1)
         self.window.blit(source=self.surf, dest=self.rect)
-        self.score_text(48, 'TOP 10 SCORE', C_YELLOW, SCORE_POS['Title'])
-        self.score_text(20, 'NAME     SCORE           DATE      ', C_YELLOW, SCORE_POS['Label'])
+        self.score_text(48, 'TOP 10 SCORE', C_WHITE, SCORE_POS['Title'])
+        self.score_text(20, 'NAME     SCORE           DATE      ', C_WHITE, SCORE_POS['Label'])
         db_proxy = DBProxy('DBScore')
         list_score = db_proxy.retrieve_top10()
         db_proxy.close()
 
         for player_score in list_score:
             id_, name, score, date = player_score
-            self.score_text(20, f'{name}     {score:05d}     {date}', C_YELLOW,
+            self.score_text(20, f'{name}     {score:05d}     {date}', C_ORANGE,
                             SCORE_POS[list_score.index(player_score)])
         while True:
             for event in pygame.event.get():

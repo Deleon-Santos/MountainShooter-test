@@ -43,6 +43,7 @@ class Level:
                 ent.move()
                 if isinstance(ent, (Player, Enemy)):
                     shoot = ent.shoot()
+                    
                     if shoot is not None:
                         self.entity_list.append(shoot)
                 if ent.name == 'Player1':
@@ -74,7 +75,7 @@ class Level:
 
             # printed text
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', C_WHITE, (10, 5))
-            self.level_text(14, f'fps: {clock.get_fps():.0f}', C_WHITE, (10, WIN_HEIGHT - 35))
+            self.level_text(14, f'fps: {clock.get_fps():.0f}', C_GREEN, (10, WIN_HEIGHT - 35))
             self.level_text(14, f'entidades: {len(self.entity_list)}', C_WHITE, (10, WIN_HEIGHT - 20))
             pygame.display.flip()
             # Collisions
