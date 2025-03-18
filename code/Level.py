@@ -7,8 +7,8 @@ import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.Const import C_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_CYAN, EVENT_TIMEOUT, \
-    TIMEOUT_STEP, TIMEOUT_LEVEL
+from code.Const import C_ORANGE, C_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_CYAN, EVENT_TIMEOUT, \
+    TIMEOUT_STEP, TIMEOUT_LEVEL, WIN_WIDTH
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -54,15 +54,28 @@ class Level:
                     pygame.quit()
                     sys.exit()
                 if event.type == EVENT_ENEMY:
-                    choice = random.choice(('Enemy1', 'Enemy2'))
+                    choice = random.choice(('Enemy1', 'Enemy2', 'Enemy3'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
+                
                 if event.type == EVENT_TIMEOUT:
                     self.timeout -= TIMEOUT_STEP
-                    if self.timeout == 0:
+                    if self.timeout <= 2600:
+                        self.level_text(100, "YOU WIN", C_ORANGE, ((WIN_WIDTH), 70))
+                        pygame.mixer_music.stop()
+                        pygame.display.flip()
+
+                        # Iterate through entities and set shoot to None
+                        for ent in self.entity_list:
+                            if isinstance(ent, (Player, Enemy)):
+                                shoot = None  # Assuming 'shoot' is an attribute of Player and Enemy
+
+                        pygame.time.wait(2000)
+
+                    if self.timeout <= 0:
                         for ent in self.entity_list:
                             if isinstance(ent, Player) and ent.name == 'Player1':
                                 player_score[0] = ent.score
-                            
+
                         return True
 
                 found_player = False
@@ -73,7 +86,8 @@ class Level:
                 if not found_player:
                     return False
 
-            # printed text
+            # printed 
+            
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', C_WHITE, (10, 5))
             self.level_text(14, f'fps: {clock.get_fps():.0f}', C_GREEN, (10, WIN_HEIGHT - 35))
             self.level_text(14, f'entidades: {len(self.entity_list)}', C_WHITE, (10, WIN_HEIGHT - 20))
