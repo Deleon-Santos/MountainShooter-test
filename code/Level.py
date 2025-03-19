@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+
 import random
 import sys
 
@@ -27,7 +26,7 @@ class Level:
         player = EntityFactory.get_entity('Player1')
         player.score = player_score[0]
         self.entity_list.append(player)
-        
+        self.endfase=pygame.mixer.Sound('./asset/endFase.ogg')
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         pygame.time.set_timer(EVENT_TIMEOUT, TIMEOUT_STEP)  # 100ms
 
@@ -54,24 +53,18 @@ class Level:
                     pygame.quit()
                     sys.exit()
                 if event.type == EVENT_ENEMY:
-                    choice = random.choice(('Enemy1', 'Enemy2', 'Enemy3'))
+                    choice = random.choice(('Enemy1', 'Enemy2', 'Enemy3'))# escolha aleatoria de inimigos
                     self.entity_list.append(EntityFactory.get_entity(choice))
                 
                 if event.type == EVENT_TIMEOUT:
                     self.timeout -= TIMEOUT_STEP
                     if self.timeout <= 2600:
-                        self.level_text(100, "YOU WIN", C_ORANGE, ((WIN_WIDTH), 70))
                         pygame.mixer_music.stop()
-                        pygame.display.flip()
-
-                       
-                        #pygame.time.wait(2000)
-
+                        self.endfase.play()# som emitido em caso de vitoria
                     if self.timeout <= 0:
                         for ent in self.entity_list:
                             if isinstance(ent, Player) and ent.name == 'Player1':
                                 player_score[0] = ent.score
-
                         return True
 
                 found_player = False

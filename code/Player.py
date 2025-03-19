@@ -6,8 +6,6 @@ from code.Const import ENTITY_SPEED, WIN_HEIGHT, WIN_WIDTH, PLAYER_KEY_UP, PLAYE
     PLAYER_KEY_RIGHT, PLAYER_KEY_SHOOT, ENTITY_SHOT_DELAY
 from code.Entity import Entity
 from code.PlayerShot import PlayerShot
-from time import time,sleep
-import time
 
 
 class Player(Entity):
@@ -34,10 +32,8 @@ class Player(Entity):
             self.shot_delay = ENTITY_SHOT_DELAY[self.name]
             pressed_key = pygame.key.get_pressed()
             if pressed_key[PLAYER_KEY_SHOOT[self.name]]:
-                #if self.sound:  # Verifica se o som foi carregado com sucesso.
                 self.sound.set_volume(1)
                 self.sound.play()
-                
                 return PlayerShot(name=f'{self.name}Shot', position=(self.rect.centerx, self.rect.centery))
             else:
                 return None

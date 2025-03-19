@@ -28,8 +28,6 @@ class Score:
             score = player_score[0]
             if game_mode == MENU_OPTION[0]:
                 score = player_score[0]
-            
-            #
             self.score_text(20, text, C_WHITE, SCORE_POS['EnterName'])
 
             for event in pygame.event.get():
