@@ -64,12 +64,8 @@ class Level:
                         pygame.mixer_music.stop()
                         pygame.display.flip()
 
-                        # Iterate through entities and set shoot to None
-                        for ent in self.entity_list:
-                            if isinstance(ent, (Player, Enemy)):
-                                shoot = None  # Assuming 'shoot' is an attribute of Player and Enemy
-
-                        pygame.time.wait(2000)
+                       
+                        #pygame.time.wait(2000)
 
                     if self.timeout <= 0:
                         for ent in self.entity_list:
